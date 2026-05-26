@@ -248,35 +248,33 @@
    ============================================================ */
 const CONFIG = {
   currencySymbol: "$",
-  freeShippingOver: 75,     // free shipping above this subtotal
-  shippingFlat: 6,          // flat shipping fee below the threshold
-  // To accept REAL card payments, set this to your serverless
-  // endpoint URL. Leave as null to run the built-in demo checkout.
+  freeShippingOver: 75,
+  shippingFlat: 6,
   checkoutEndpoint: null
 };
 
 /* ============================================================
    PRODUCTS — edit / add your items here.
-   Fields: id, name, cat, price, desc, long, dim, w, lh, time
-   Optional: art (built-in line illustration) OR img ("photos/x.jpg")
    ============================================================ */
 const PRODUCTS = [
   // ---- DESK ----
-  {id:1,name:"Modular Desk Tray",cat:"Desk",art:"organizer",price:34,desc:"Stackable trays for pens, clips and cards.",long:"A modular system of interlocking trays that tessellate to fit any desk. Print more, snap them together, reconfigure whenever your setup changes.",dim:"180×120×40mm",w:"210g",lh:"0.2mm",time:"2–3 days"},
-  {id:5,name:"Catch-All Tray",cat:"Desk",art:"tray",price:22,desc:"Soft-edge dish for keys and coins.",long:"A gently curved dish for the entryway — keys, coins, rings. Soft radius edges and a matte finish that hides fingerprints.",dim:"150×150×35mm",w:"130g",lh:"0.2mm",time:"2 days"},
-  {id:7,name:"Cable Wrangler",cat:"Desk",art:"cable",price:14,desc:"Clips desk cables out of sight.",long:"A weighted clip that routes charging cables along the edge of your desk so they never slip away again. Adhesive base included.",dim:"70×50×30mm",w:"40g",lh:"0.2mm",time:"2 days"},
+  {id:1,name:"Headphone Hook",cat:"Desk",art:"hphook",price:12,desc:"Under-desk mount to hang your headphones.",long:"A sleek under-desk hook that holds your headphones out of the way but within reach. Sticks on with strong adhesive — no screws, no drilling.",dim:"80×40×55mm",w:"45g",lh:"0.2mm",time:"2 days"},
+  {id:2,name:"Pen & Tool Cup",cat:"Desk",art:"pencup",price:16,desc:"Weighted cup that won't tip.",long:"A clean cylindrical cup with a weighted base so it stays put, even when you grab a pen in a hurry. Holds pens, scissors, brushes and more.",dim:"Ø85×100mm",w:"120g",lh:"0.2mm",time:"2 days"},
+  {id:3,name:"Phone Stand",cat:"Desk",art:"phonestand",price:14,desc:"Adjustable angle for desk or nightstand.",long:"A minimal stand that props your phone at a comfortable viewing angle for calls, recipes or watching videos. Fits cases and charges while docked.",dim:"100×80×95mm",w:"90g",lh:"0.2mm",time:"2 days"},
+  {id:4,name:"Cable Clips (Set of 4)",cat:"Desk",art:"cable",price:10,desc:"Keep charging cables in reach.",long:"A set of four weighted clips that route charging and USB cables along your desk edge so they never slip behind it again. Adhesive bases included.",dim:"30×25×20mm",w:"60g",lh:"0.2mm",time:"2 days"},
   // ---- LIVING ----
-  {id:3,name:"Arc Wall Hook",cat:"Living",art:"hook",price:16,desc:"Minimal hook, holds up to 4kg.",long:"A single sweeping arc that mounts with two screws and holds coats, bags or towels up to 4kg. Sold individually or as a set.",dim:"90×60×45mm",w:"55g",lh:"0.2mm",time:"2 days"},
-  {id:4,name:"Halo Table Lamp",cat:"Living",art:"lamp",price:62,desc:"Diffused shade, warm LED included.",long:"A printed shade that diffuses a warm LED into a soft glow. Ships with bulb and braided cord. A quiet centrepiece for any side table.",dim:"160×160×220mm",w:"480g",lh:"0.12mm",time:"4 days"},
-  {id:8,name:"Minute Wall Clock",cat:"Living",art:"clock",price:46,desc:"Silent sweep movement, 22cm face.",long:"A clean printed clock face with a silent sweep movement — no ticking. 22cm diameter, runs on a single AA battery.",dim:"Ø220×35mm",w:"290g",lh:"0.16mm",time:"4 days"},
+  {id:5,name:"Wall Hook Set",cat:"Living",art:"hook",price:18,desc:"Minimal hooks for keys, coats, bags.",long:"A set of sweeping arc hooks that mount with two screws each and hold coats, bags, keys or towels. Sold as a set of three.",dim:"90×60×45mm",w:"165g",lh:"0.2mm",time:"2 days"},
+  {id:6,name:"Floating Shelf Bracket Pair",cat:"Living",art:"bracket",price:24,desc:"Modern brackets for a wood shelf.",long:"A pair of hidden-style brackets with a clean modern profile. Mount them to studs, add your own board, and get a floating shelf in minutes.",dim:"150×120×40mm",w:"220g",lh:"0.24mm",time:"3 days"},
+  {id:7,name:"Tea Light Holders (Set of 3)",cat:"Living",art:"tealight",price:22,desc:"Geometric candle holders.",long:"Three faceted tea-light holders that cast a warm, patterned glow. Fits standard tea lights or flameless LED candles. A cosy centrepiece set.",dim:"60×60×45mm",w:"150g",lh:"0.16mm",time:"3 days"},
   // ---- PLANTS ----
-  {id:2,name:"Faceted Planter",cat:"Plants",art:"planter",price:28,desc:"Self-draining geometric pot for succulents.",long:"A low-poly planter with a hidden drainage reservoir, so you can water without the mess. Sized for small succulents and herbs.",dim:"Ø110×120mm",w:"180g",lh:"0.16mm",time:"3–4 days"},
-  {id:6,name:"Ribbed Bud Vase",cat:"Plants",art:"vase",price:24,desc:"Watertight liner, single-stem.",long:"A ribbed vase with a sealed watertight liner for a single stem. The vertical lines catch light beautifully on a windowsill.",dim:"Ø80×160mm",w:"160g",lh:"0.14mm",time:"3 days"},
-  // ---- TOYS ----
-  {id:9,name:"Articulated Dino",cat:"Toys",art:"dino",price:26,desc:"Print-in-place, fully poseable.",long:"A flexible articulated dinosaur printed in one piece — every segment moves the moment it comes off the bed. A modern desk-toy classic.",dim:"220×60×80mm",w:"95g",lh:"0.2mm",time:"3 days"},
-  {id:10,name:"Stacking Robot",cat:"Toys",art:"robot",price:22,desc:"Mix-and-match body parts.",long:"A little robot with swappable head, body and legs that snap together. Collect a few and build your own crew.",dim:"110×70×70mm",w:"80g",lh:"0.2mm",time:"2–3 days"},
-  {id:11,name:"Spinning Top Set",cat:"Toys",art:"top",price:12,desc:"Set of three balanced tops.",long:"Three precision-balanced spinning tops with different profiles — see which one spins the longest. Great stocking filler.",dim:"45×45×40mm",w:"30g",lh:"0.16mm",time:"2 days"},
-  {id:12,name:"Puzzle Blocks",cat:"Toys",art:"blocks",price:18,desc:"Interlocking brain-teaser cubes.",long:"A six-piece interlocking puzzle that comes apart and (eventually) goes back together. Satisfying, quiet, and screen-free.",dim:"80×80×80mm",w:"140g",lh:"0.2mm",time:"3 days"}
+  {id:8,name:"Self-Watering Planter",cat:"Plants",art:"planter",price:28,desc:"Built-in reservoir for low-maintenance plants.",long:"A two-part planter with a hidden water reservoir that wicks moisture up to the roots, so your plant thrives even if you forget to water for a week.",dim:"Ø120×130mm",w:"190g",lh:"0.16mm",time:"3–4 days"},
+  {id:9,name:"Hanging Planter",cat:"Plants",art:"hangplanter",price:26,desc:"Geometric pot with cord.",long:"A faceted hanging pot that ships with a braided cord and ceiling hook. Perfect for trailing plants by a window. Includes a drip tray insert.",dim:"Ø110×120mm",w:"170g",lh:"0.16mm",time:"3 days"},
+  {id:10,name:"Propagation Station",cat:"Plants",art:"propagation",price:32,desc:"Holds test tubes for cuttings.",long:"A modern stand holding three glass test tubes for propagating plant cuttings — watch the roots grow. Glass tubes included; a living piece of decor.",dim:"200×60×120mm",w:"240g",lh:"0.16mm",time:"4 days"},
+  // ---- TOYS & GIFTS ----
+  {id:11,name:"Articulated Dragon",cat:"Toys",art:"dragon",price:24,desc:"Print-in-place, fully poseable.",long:"A flexible articulated dragon printed in a single piece — every segment moves the moment it comes off the bed. A satisfying, fidget-friendly favourite.",dim:"260×70×90mm",w:"110g",lh:"0.2mm",time:"3 days"},
+  {id:12,name:"Fidget Spinner",cat:"Toys",art:"spinner",price:10,desc:"Smooth-spin desk fidget.",long:"A balanced three-arm fidget spinner with a quality bearing for a long, smooth spin. A simple, addictive little desk companion.",dim:"75×75×15mm",w:"45g",lh:"0.16mm",time:"2 days"},
+  {id:13,name:"Marble Run Kit",cat:"Toys",art:"marblerun",price:38,desc:"Connectable track pieces.",long:"A set of connectable track and tower pieces that snap together into endless marble-run layouts. Includes marbles. Hours of build-and-rebuild fun.",dim:"Various / boxed set",w:"520g",lh:"0.2mm",time:"4–5 days"},
+  {id:14,name:"Custom Name Puzzle",cat:"Toys",art:"namepuzzle",price:20,desc:"Personalized kids' name puzzle.",long:"A chunky personalised name puzzle — send us the name and we print each letter as a colourful, easy-grip piece on a matching base. A keepsake gift.",dim:"Sized to name",w:"~120g",lh:"0.2mm",time:"3–4 days"}
 ];
 // Order the sections appear on the page:
 const CAT_ORDER=["Desk","Living","Plants","Toys"];
@@ -284,18 +282,20 @@ const COLORS=[{n:"Bone",c:"#EFEBE0"},{n:"Charcoal",c:"#2B2A28"},{n:"Clay",c:"#C8
 
 /* Built-in line illustrations (used when a product has no `img`) */
 const ART = {
-  organizer:`<svg viewBox="0 0 100 100" class="art"><rect x="20" y="38" width="60" height="42" rx="4"/><line x1="40" y1="38" x2="40" y2="80"/><line x1="60" y1="38" x2="60" y2="80"/><rect class="s-acc" x="46" y="20" width="8" height="20" rx="2"/><rect x="30" y="26" width="6" height="14" rx="2"/><rect class="s-acc" x="64" y="24" width="6" height="16" rx="2"/></svg>`,
-  planter:`<svg viewBox="0 0 100 100" class="art"><path d="M30 46 L36 82 H64 L70 46 Z"/><ellipse cx="50" cy="46" rx="20" ry="6"/><path class="s-acc" d="M50 44 C50 30 40 26 38 18"/><path class="s-acc" d="M50 44 C50 32 60 28 64 22"/><path class="s-acc" d="M50 44 C50 34 50 24 50 16"/></svg>`,
-  hook:`<svg viewBox="0 0 100 100" class="art"><rect x="34" y="18" width="32" height="14" rx="3"/><line x1="50" y1="25" x2="50" y2="25" stroke-linecap="round" stroke-width="5"/><path class="s-acc" d="M50 32 V58 C50 70 64 70 64 58" stroke-linecap="round"/></svg>`,
-  lamp:`<svg viewBox="0 0 100 100" class="art"><path class="s-acc" d="M36 30 H64 L70 60 H30 Z"/><line x1="50" y1="60" x2="50" y2="78"/><ellipse cx="50" cy="82" rx="18" ry="5"/><line x1="42" y1="30" x2="44" y2="22"/><line x1="58" y1="30" x2="56" y2="22"/></svg>`,
-  tray:`<svg viewBox="0 0 100 100" class="art"><path d="M22 52 L30 70 H70 L78 52 Z"/><ellipse cx="50" cy="52" rx="28" ry="8"/><ellipse class="s-acc" cx="50" cy="50" rx="14" ry="4"/></svg>`,
-  vase:`<svg viewBox="0 0 100 100" class="art"><path d="M40 24 C40 40 30 44 30 60 C30 76 42 82 50 82 C58 82 70 76 70 60 C70 44 60 40 60 24 Z"/><path class="s-acc" d="M40 24 H60"/><path class="s-acc" d="M44 50 C50 54 56 50 56 50"/></svg>`,
+  hphook:`<svg viewBox="0 0 100 100" class="art" stroke-linecap="round"><rect x="30" y="20" width="40" height="10" rx="3"/><path class="s-acc" d="M40 30 V46 C40 58 60 58 60 46"/><path d="M34 62 C34 50 66 50 66 62 V72 C66 80 34 80 34 72 Z"/></svg>`,
+  pencup:`<svg viewBox="0 0 100 100" class="art"><path d="M34 34 L37 78 H63 L66 34 Z"/><ellipse cx="50" cy="34" rx="16" ry="5"/><line class="s-acc" x1="46" y1="22" x2="44" y2="40"/><line class="s-acc" x1="54" y1="20" x2="56" y2="40"/><line x1="50" y1="26" x2="50" y2="40"/></svg>`,
+  phonestand:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round"><path d="M30 74 L40 40 H66 L70 74 Z"/><rect class="s-acc" x="44" y="30" width="24" height="40" rx="3" transform="rotate(8 56 50)"/></svg>`,
   cable:`<svg viewBox="0 0 100 100" class="art"><rect x="32" y="40" width="36" height="26" rx="6"/><path class="s-acc" d="M40 40 C40 28 60 28 60 40"/><line x1="44" y1="66" x2="44" y2="76"/><line x1="56" y1="66" x2="56" y2="76"/></svg>`,
-  clock:`<svg viewBox="0 0 100 100" class="art"><circle cx="50" cy="50" r="30"/><line x1="50" y1="50" x2="50" y2="32"/><line class="s-acc" x1="50" y1="50" x2="64" y2="56"/><circle cx="50" cy="50" r="3" class="fill-ink"/></svg>`,
-  dino:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round" stroke-linecap="round"><path d="M16 66 C16 52 30 48 40 48 C46 40 56 34 66 34 C64 28 66 24 72 22 C70 28 74 30 78 32 C72 36 70 42 70 48 C76 52 80 58 80 66"/><path d="M28 66 V78 M40 66 V78 M60 66 V76 M72 66 V76"/><path class="s-acc" d="M40 48 L46 40 M52 44 L58 36 M64 40 L70 34"/></svg>`,
-  robot:`<svg viewBox="0 0 100 100" class="art" stroke-linecap="round"><rect x="36" y="34" width="28" height="24" rx="4"/><rect x="40" y="60" width="20" height="18" rx="3"/><circle class="s-acc" cx="45" cy="45" r="2.6"/><circle class="s-acc" cx="55" cy="45" r="2.6"/><line x1="50" y1="34" x2="50" y2="27"/><circle cx="50" cy="24" r="2.5"/><line x1="36" y1="44" x2="27" y2="50"/><line x1="64" y1="44" x2="73" y2="50"/></svg>`,
-  top:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round"><path d="M34 42 H66 L50 74 Z"/><ellipse cx="50" cy="42" rx="16" ry="5"/><line class="s-acc" x1="50" y1="42" x2="50" y2="24"/><circle class="s-acc" cx="50" cy="22" r="3"/></svg>`,
-  blocks:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round"><rect x="28" y="52" width="22" height="22" rx="2"/><rect x="50" y="52" width="22" height="22" rx="2"/><rect class="s-acc" x="39" y="30" width="22" height="22" rx="2"/></svg>`
+  hook:`<svg viewBox="0 0 100 100" class="art"><rect x="34" y="18" width="32" height="14" rx="3"/><line x1="50" y1="25" x2="50" y2="25" stroke-linecap="round" stroke-width="5"/><path class="s-acc" d="M50 32 V58 C50 70 64 70 64 58" stroke-linecap="round"/></svg>`,
+  bracket:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round"><path d="M30 30 V70 H70"/><path class="s-acc" d="M30 30 L62 62"/><rect x="24" y="24" width="8" height="52" rx="2"/></svg>`,
+  tealight:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round"><path d="M34 50 L38 76 H62 L66 50 Z"/><polygon points="50,38 60,50 40,50" class="s-acc"/><path class="s-acc" d="M50 38 C50 32 50 30 50 28"/></svg>`,
+  planter:`<svg viewBox="0 0 100 100" class="art"><path d="M30 46 L36 82 H64 L70 46 Z"/><ellipse cx="50" cy="46" rx="20" ry="6"/><path class="s-acc" d="M50 44 C50 30 40 26 38 18"/><path class="s-acc" d="M50 44 C50 32 60 28 64 22"/><path class="s-acc" d="M50 44 C50 34 50 24 50 16"/></svg>`,
+  hangplanter:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round"><path class="s-acc" d="M50 14 V32 M36 20 L50 32 L64 20"/><path d="M34 40 L40 70 H60 L66 40 Z"/><ellipse cx="50" cy="40" rx="16" ry="5"/></svg>`,
+  propagation:`<svg viewBox="0 0 100 100" class="art" stroke-linecap="round"><rect x="26" y="64" width="48" height="10" rx="3"/><path d="M38 36 V60 C38 66 46 66 46 60 V36"/><path d="M54 36 V60 C54 66 62 66 62 60 V36"/><path class="s-acc" d="M42 36 C42 28 38 26 36 22 M58 36 C58 28 62 26 64 22"/></svg>`,
+  dragon:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round" stroke-linecap="round"><path d="M14 70 C14 58 26 54 36 54 C44 44 56 40 68 40 C66 32 70 26 78 24 C74 30 78 34 82 36 C74 40 72 46 70 54"/><path class="s-acc" d="M36 54 L42 46 M50 50 L56 42 M62 46 L68 40"/><path d="M26 70 V80 M40 70 V80 M58 64 V76"/></svg>`,
+  spinner:`<svg viewBox="0 0 100 100" class="art"><circle cx="50" cy="50" r="9"/><circle class="s-acc" cx="50" cy="28" r="9"/><circle class="s-acc" cx="69" cy="61" r="9"/><circle class="s-acc" cx="31" cy="61" r="9"/></svg>`,
+  marblerun:`<svg viewBox="0 0 100 100" class="art" stroke-linecap="round"><path d="M24 30 H54 M40 30 V48 H70 M56 48 V66 H32"/><circle class="s-acc" cx="28" cy="26" r="4"/><circle class="s-acc" cx="64" cy="44" r="4"/><circle class="s-acc" cx="36" cy="70" r="4"/></svg>`,
+  namepuzzle:`<svg viewBox="0 0 100 100" class="art" stroke-linejoin="round"><rect x="22" y="56" width="56" height="16" rx="3"/><rect x="28" y="34" width="16" height="22" rx="2"/><rect class="s-acc" x="46" y="30" width="16" height="26" rx="2"/><rect x="64" y="38" width="12" height="18" rx="2"/></svg>`
 };
 function media(p){
   if(p.img) return `<img class="ph" src="${p.img}" alt="${p.name}">`;
@@ -306,13 +306,11 @@ let activeCat="All",cart={},view="cart",detailId=null,detailQty=1,detailColor=0;
 const money=n=>CONFIG.currencySymbol+n.toFixed(2);
 const shipCost=sub=>sub>CONFIG.freeShippingOver?0:CONFIG.shippingFlat;
 
-/* filters */
 const filtersEl=document.getElementById('filters');
 ["All",...CAT_ORDER].forEach(c=>{const b=document.createElement('button');b.className='chip'+(c==='All'?' active':'');b.textContent=c;
   b.onclick=()=>{activeCat=c;[...filtersEl.children].forEach(x=>x.classList.toggle('active',x.textContent===c));renderShop();};
   filtersEl.appendChild(b);});
 
-/* build one product card element */
 function card(p){
   const el=document.createElement('article');el.className='card';el.onclick=()=>openDetail(p.id);
   el.innerHTML=`<div class="thumb"><span class="tag mono">Made to order</span>${media(p)}<span class="view-hint">View →</span></div>
@@ -323,7 +321,6 @@ function card(p){
   return el;
 }
 
-/* render the shop as one labelled section per category */
 function renderShop(){
   const host=document.getElementById('sections');
   const q=(document.getElementById('search').value||'').toLowerCase();
@@ -343,7 +340,6 @@ function renderShop(){
 }
 renderShop();
 
-/* cart */
 function addToCart(id,btn,qty=1){cart[id]=(cart[id]||0)+qty;updateCount();
   if(btn){btn.textContent='Added ✓';btn.classList.add('done');setTimeout(()=>{btn.textContent='Add to cart';btn.classList.remove('done');},1100);}
   showToast(PRODUCTS.find(p=>p.id===id).name+' added'+(qty>1?' ×'+qty:''));}
@@ -390,7 +386,7 @@ function checkoutView(){const sub=subtotal(),ship=shipCost(sub);
 }
 
 async function placeOrder(){
-  if(!CONFIG.checkoutEndpoint){ view='confirm'; renderDrawer(); return; } // demo
+  if(!CONFIG.checkoutEndpoint){ view='confirm'; renderDrawer(); return; }
   const note=document.getElementById('payNote'); if(note) note.textContent='Redirecting to secure payment…';
   try{
     const items=Object.entries(cart).map(([id,q])=>{const p=PRODUCTS.find(x=>x.id==id);return {name:p.name,price:p.price,qty:q};});
@@ -409,7 +405,6 @@ function confirmView(){const order='FRM-'+Math.floor(100000+Math.random()*900000
       <button class="checkout" style="max-width:240px;margin:26px auto 0" onclick="closeCart();view='cart';renderDrawer()">Continue shopping</button></div>`;
 }
 
-/* product detail */
 function openDetail(id){detailId=id;detailQty=1;detailColor=0;renderDetail();
   document.getElementById('dscrim').classList.add('open');document.getElementById('detail').classList.add('open');}
 function closeDetail(){document.getElementById('dscrim').classList.remove('open');document.getElementById('detail').classList.remove('open');}
