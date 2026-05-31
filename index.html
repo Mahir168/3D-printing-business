@@ -187,13 +187,114 @@
   .foot-cols a{display:block;color:var(--ink-soft);font-size:14px;margin-bottom:9px;transition:color .2s}
   .foot-cols a:hover{color:var(--accent)}
   .copy{margin-top:46px;font-size:12px;color:var(--ink-soft);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* ============ ADMIN MODE ============ */
+  body.admin-mode{padding-top:56px}
+  .admin-banner{position:fixed;top:0;left:0;right:0;height:56px;background:linear-gradient(90deg,#9b3a2b,#c14a35);color:#fff;display:none;align-items:center;justify-content:space-between;padding:0 24px;z-index:100;box-shadow:0 4px 20px rgba(0,0,0,.4);font-family:"Space Mono",monospace}
+  body.admin-mode .admin-banner{display:flex}
+  .admin-banner-title{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+  .admin-banner-title .blink{width:10px;height:10px;background:#ffd45e;border-radius:50%;animation:adminPulse 1.4s ease-in-out infinite}
+  @keyframes adminPulse{0%,100%{opacity:1}50%{opacity:.3}}
+  .admin-banner-actions{display:flex;gap:18px;font-size:12px;align-items:center}
+  .admin-banner-actions button{font-family:inherit;font-size:12px;color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);padding:7px 14px;border-radius:100px;cursor:pointer;letter-spacing:.04em;transition:background .15s}
+  .admin-banner-actions button:hover{background:rgba(255,255,255,.28)}
+  .admin-banner-actions button.exit{background:rgba(0,0,0,.3)}
+  body.admin-mode header{top:56px}
+
+  .admin-panel{position:fixed;top:56px;right:24px;width:340px;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);padding:22px;z-index:99;display:none;font-family:"Hanken Grotesk",sans-serif}
+  body.admin-mode .admin-panel.open{display:block}
+  .admin-panel h3{font-family:"Bricolage Grotesque";font-size:18px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .admin-panel h3 .badge{font-family:"Space Mono",monospace;font-size:10px;background:var(--accent);color:#1b1306;padding:3px 8px;border-radius:100px;letter-spacing:.08em}
+  .admin-panel .sub{font-size:12px;color:var(--ink-soft);margin-bottom:16px}
+  .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .admin-stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+  .admin-stat .n{font-family:"Bricolage Grotesque";font-size:24px;font-weight:800;color:var(--accent);line-height:1}
+  .admin-stat .l{font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.1em;margin-top:6px;font-weight:700}
+  .admin-actions{display:flex;flex-direction:column;gap:8px}
+  .admin-actions button{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);color:var(--ink);padding:12px 14px;border-radius:10px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:border-color .15s,background .15s}
+  .admin-actions button:hover{border-color:var(--accent);background:var(--paper)}
+  .admin-actions button .arrow{color:var(--ink-soft);font-size:14px}
+  .admin-actions button .tag{font-size:10px;background:var(--line);color:var(--ink-soft);padding:3px 7px;border-radius:100px;letter-spacing:.04em}
+  .admin-foot{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);font-size:11px;color:var(--ink-soft);font-family:"Space Mono",monospace;line-height:1.6}
+
+  .admin-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:28px;z-index:120;max-width:480px;width:92vw;display:none;box-shadow:0 40px 80px -20px rgba(0,0,0,.8)}
+  .admin-modal.open{display:block}
+  .admin-modal h4{font-family:"Bricolage Grotesque";font-size:22px;font-weight:800;margin-bottom:10px}
+  .admin-modal p{color:var(--ink-soft);font-size:14px;margin-bottom:14px;line-height:1.55}
+  .admin-modal .ok{background:var(--accent);color:#1b1306;border:none;padding:10px 22px;border-radius:100px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
+  .admin-modal-scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:115;display:none;backdrop-filter:blur(2px)}
+  .admin-modal-scrim.open{display:block}
+
+  .pin-pad .pin-error{color:#e07a6a;font-size:13px;font-weight:600;min-height:18px;margin-top:8px}
+  .pin-input-wrap{position:relative}
+  .pin-pad input{width:100%;padding:14px 48px 14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-family:"Space Mono",monospace;font-size:15px;letter-spacing:.06em}
+  .pin-pad input:focus{outline:none;border-color:var(--accent)}
+  .pin-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--ink-soft);font-size:18px;width:36px;height:36px;border-radius:50%;cursor:pointer;transition:background .15s,color .15s}
+  .pin-eye:hover{background:var(--line);color:var(--ink)}
+  .pin-eye.shown{color:var(--accent)}
+  .brand{cursor:pointer;user-select:none}
 </style>
 </head>
 <body>
 
+<!-- ============ ADMIN MODE UI ============ -->
+<div class="admin-banner">
+  <div class="admin-banner-title"><span class="blink"></span>ADMIN MODE · MAHIR168</div>
+  <div class="admin-banner-actions">
+    <button onclick="toggleAdminPanel()">Toggle Panel</button>
+    <button class="exit" onclick="exitAdmin()">Exit (Esc)</button>
+  </div>
+</div>
+
+<div class="admin-panel open" id="adminPanel">
+  <h3>Control Room <span class="badge">v1</span></h3>
+  <div class="sub">Welcome back, Mahir. Quick overview below — features wire up in Phase 2.</div>
+
+  <div class="admin-grid">
+    <div class="admin-stat"><div class="n" id="adminProductCount">—</div><div class="l">Products</div></div>
+    <div class="admin-stat"><div class="n" id="adminCatCount">—</div><div class="l">Categories</div></div>
+    <div class="admin-stat"><div class="n">0</div><div class="l">Orders today</div></div>
+    <div class="admin-stat"><div class="n">—</div><div class="l">Visitors</div></div>
+  </div>
+
+  <div class="admin-actions">
+    <button onclick="adminPlaceholder('Stats')">📊 View Site Stats <span class="tag">soon</span></button>
+    <button onclick="adminPlaceholder('Products')">🛒 Manage Products <span class="tag">soon</span></button>
+    <button onclick="adminPlaceholder('Orders')">📦 View Orders <span class="tag">soon</span></button>
+    <button onclick="adminPlaceholder('Settings')">⚙️ Site Settings <span class="tag">soon</span></button>
+  </div>
+
+  <div class="admin-foot">
+    Build · v1 · Phase 1<br>
+    Press <b>Esc</b> to exit admin mode.
+  </div>
+</div>
+
+<div class="admin-modal-scrim" id="adminModalScrim" onclick="closeAdminModal()"></div>
+<div class="admin-modal" id="adminModal">
+  <h4 id="adminModalTitle">Coming soon</h4>
+  <p id="adminModalBody">This feature is part of Phase 2 — we'll wire it up when you're ready to add Stripe / Google Analytics / a real product editor.</p>
+  <button class="ok" onclick="closeAdminModal()">Got it</button>
+</div>
+
+<div class="admin-modal-scrim" id="pinScrim" onclick="closePinPad()"></div>
+<div class="admin-modal pin-pad" id="pinPad">
+  <h4>🔐 Enter Admin Passphrase</h4>
+  <p style="margin-bottom:18px">Type your passphrase to enter admin mode.</p>
+  <div class="pin-input-wrap">
+    <input type="password" id="pinInput" placeholder="Passphrase" autocomplete="off" spellcheck="false">
+    <button type="button" class="pin-eye" id="pinEye" onclick="togglePinView()" aria-label="Show passphrase">👁</button>
+  </div>
+  <div id="pinError" class="pin-error"></div>
+  <div style="display:flex;gap:10px;margin-top:14px">
+    <button class="ok" onclick="submitPin()">Unlock</button>
+    <button class="ok" style="background:var(--card);color:var(--ink);border:1px solid var(--line)" onclick="closePinPad()">Cancel</button>
+  </div>
+</div>
+
 <header>
   <div class="wrap nav">
-    <a href="#" class="brand"><span class="dot"></span>FORMA</a>
+    <a href="#" class="brand" onclick="bumpLogoClicks();return false;"><span class="dot"></span>FORMA</a>
     <nav class="links">
       <a href="#shop">Shop</a><a href="#shop">Collections</a><a href="#">Materials</a><a href="#">About</a>
     </nav>
@@ -469,7 +570,112 @@ function renderDetail(){
 function addFromDetail(){addToCart(detailId,null,detailQty);closeDetail();openCart();}
 
 let toastT;function showToast(m){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1600);}
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();closeDetail();}});
+
+/* ============ ADMIN MODE ============ */
+const ADMIN_PASS = 'SaS$$Admin168861';
+function enterAdmin(){
+  document.body.classList.add('admin-mode');
+  document.getElementById('adminPanel').classList.add('open');
+  document.getElementById('adminProductCount').textContent = PRODUCTS.length;
+  document.getElementById('adminCatCount').textContent = CAT_ORDER.length;
+  showToast('🔓 Admin mode unlocked');
+}
+function exitAdmin(){
+  document.body.classList.remove('admin-mode');
+  document.getElementById('adminPanel').classList.remove('open');
+  closeAdminModal();
+  closePinPad();
+  showToast('Admin mode locked');
+}
+function toggleAdminPanel(){
+  document.getElementById('adminPanel').classList.toggle('open');
+}
+function adminPlaceholder(feature){
+  const titles = {
+    Stats: '📊 Site Stats',
+    Products: '🛒 Manage Products',
+    Orders: '📦 View Orders',
+    Settings: '⚙️ Site Settings'
+  };
+  const bodies = {
+    Stats: "Phase 2: wire up Google Analytics here. We'll show visitors, popular products, and traffic sources right in this panel.",
+    Products: "Phase 2: an in-browser editor for prices, names, and descriptions. Saves a JSON file you upload to GitHub — no code editing needed.",
+    Orders: "Phase 2: once Stripe is connected, recent orders appear here with quick links to fulfillment.",
+    Settings: "Phase 2: toggle 'Coming Soon' mode per product, change shop name, footer text, hero copy."
+  };
+  document.getElementById('adminModalTitle').textContent = titles[feature] || feature;
+  document.getElementById('adminModalBody').textContent = bodies[feature] || 'Coming soon.';
+  document.getElementById('adminModal').classList.add('open');
+  document.getElementById('adminModalScrim').classList.add('open');
+}
+function closeAdminModal(){
+  document.getElementById('adminModal').classList.remove('open');
+  document.getElementById('adminModalScrim').classList.remove('open');
+}
+
+/* Logo click counter -> opens PIN pad */
+let logoClicks = 0;
+function bumpLogoClicks(){
+  logoClicks++;
+  if(logoClicks >= 5){
+    logoClicks = 0;
+    openPinPad();
+  }
+}
+function openPinPad(){
+  document.getElementById('pinPad').classList.add('open');
+  document.getElementById('pinScrim').classList.add('open');
+  const inp = document.getElementById('pinInput');
+  inp.value = '';
+  inp.type = 'password';
+  const eye = document.getElementById('pinEye');
+  eye.classList.remove('shown');
+  eye.textContent = '👁';
+  document.getElementById('pinError').textContent = '';
+  setTimeout(()=>inp.focus(), 50);
+}
+function closePinPad(){
+  document.getElementById('pinPad').classList.remove('open');
+  document.getElementById('pinScrim').classList.remove('open');
+  document.getElementById('pinInput').value = '';
+  document.getElementById('pinError').textContent = '';
+}
+function submitPin(){
+  const v = document.getElementById('pinInput').value;
+  if(v === ADMIN_PASS){
+    closePinPad();
+    enterAdmin();
+  } else {
+    document.getElementById('pinError').textContent = 'Incorrect.';
+    document.getElementById('pinInput').value = '';
+  }
+}
+function togglePinView(){
+  const inp = document.getElementById('pinInput');
+  const eye = document.getElementById('pinEye');
+  if(inp.type === 'password'){
+    inp.type = 'text';
+    eye.classList.add('shown');
+    eye.textContent = '🙈';
+    eye.setAttribute('aria-label','Hide passphrase');
+  } else {
+    inp.type = 'password';
+    eye.classList.remove('shown');
+    eye.textContent = '👁';
+    eye.setAttribute('aria-label','Show passphrase');
+  }
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(document.getElementById('pinPad').classList.contains('open')){ closePinPad(); return; }
+    if(document.body.classList.contains('admin-mode')){ exitAdmin(); return; }
+    closeCart(); closeDetail(); return;
+  }
+  if(e.key==='Enter' && document.getElementById('pinPad').classList.contains('open')){
+    submitPin();
+  }
+});
 </script>
 </body>
 </html>
