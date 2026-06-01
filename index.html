@@ -228,6 +228,7 @@
   .pin-pad .pin-error{color:#e07a6a;font-size:13px;font-weight:600;min-height:18px;margin-top:8px}
   .pin-input-wrap{position:relative}
   .pin-pad input{width:100%;padding:14px 48px 14px 16px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font-family:"Space Mono",monospace;font-size:15px;letter-spacing:.06em}
+  .pin-pad input[type="email"]{padding-right:16px}
   .pin-pad input:focus{outline:none;border-color:var(--accent)}
   .pin-eye{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--ink-soft);font-size:18px;width:36px;height:36px;border-radius:50%;cursor:pointer;transition:background .15s,color .15s}
   .pin-eye:hover{background:var(--line);color:var(--ink)}
@@ -279,17 +280,21 @@
 
 <div class="admin-modal-scrim" id="pinScrim" onclick="closePinPad()"></div>
 <div class="admin-modal pin-pad" id="pinPad">
-  <h4>🔐 Enter Admin Passphrase</h4>
-  <p style="margin-bottom:18px">Type your passphrase to enter admin mode.</p>
+  <h4>🔐 Admin Login</h4>
+  <p style="margin-bottom:18px">Sign in to enter admin mode.</p>
+  <div class="pin-input-wrap" style="margin-bottom:10px">
+    <input type="email" id="loginEmail" placeholder="Email" autocomplete="off" spellcheck="false">
+  </div>
   <div class="pin-input-wrap">
-    <input type="password" id="pinInput" placeholder="Passphrase" autocomplete="off" spellcheck="false">
-    <button type="button" class="pin-eye" id="pinEye" onclick="togglePinView()" aria-label="Show passphrase">👁</button>
+    <input type="password" id="pinInput" placeholder="Password" autocomplete="off" spellcheck="false">
+    <button type="button" class="pin-eye" id="pinEye" onclick="togglePinView()" aria-label="Show password">👁</button>
   </div>
   <div id="pinError" class="pin-error"></div>
   <div style="display:flex;gap:10px;margin-top:14px">
-    <button class="ok" onclick="submitPin()">Unlock</button>
+    <button class="ok" id="loginBtn" onclick="submitPin()">Sign in</button>
     <button class="ok" style="background:var(--card);color:var(--ink);border:1px solid var(--line)" onclick="closePinPad()">Cancel</button>
   </div>
+  <div style="margin-top:14px;font-size:12px"><a href="#" onclick="sendReset();return false;" style="color:var(--ink-soft);text-decoration:underline">Forgot password?</a></div>
 </div>
 
 <header>
@@ -571,8 +576,7 @@ function addFromDetail(){addToCart(detailId,null,detailQty);closeDetail();openCa
 
 let toastT;function showToast(m){const t=document.getElementById('toast');document.getElementById('toastMsg').textContent=m;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),1600);}
 
-/* ============ ADMIN MODE ============ */
-const ADMIN_PASS = 'SaS$$Admin168861';
+/* ============ ADMIN MODE (Firebase Auth) ============ */
 function enterAdmin(){
   document.body.classList.add('admin-mode');
   document.getElementById('adminPanel').classList.add('open');
@@ -585,6 +589,8 @@ function exitAdmin(){
   document.getElementById('adminPanel').classList.remove('open');
   closeAdminModal();
   closePinPad();
+  // Also sign out of Firebase
+  if(window._fbSignOut) window._fbSignOut();
   showToast('Admin mode locked');
 }
 function toggleAdminPanel(){
@@ -626,29 +632,70 @@ function openPinPad(){
   document.getElementById('pinPad').classList.add('open');
   document.getElementById('pinScrim').classList.add('open');
   const inp = document.getElementById('pinInput');
+  const eml = document.getElementById('loginEmail');
   inp.value = '';
   inp.type = 'password';
+  eml.value = '';
   const eye = document.getElementById('pinEye');
   eye.classList.remove('shown');
   eye.textContent = '👁';
-  document.getElementById('pinError').textContent = '';
-  setTimeout(()=>inp.focus(), 50);
+  const err = document.getElementById('pinError');
+  err.textContent = '';
+  err.style.color = '';
+  setTimeout(()=>eml.focus(), 50);
 }
 function closePinPad(){
   document.getElementById('pinPad').classList.remove('open');
   document.getElementById('pinScrim').classList.remove('open');
   document.getElementById('pinInput').value = '';
-  document.getElementById('pinError').textContent = '';
+  document.getElementById('loginEmail').value = '';
+  const err = document.getElementById('pinError');
+  err.textContent = '';
+  err.style.color = '';
 }
 function submitPin(){
-  const v = document.getElementById('pinInput').value;
-  if(v === ADMIN_PASS){
+  const email = (document.getElementById('loginEmail').value||'').trim();
+  const pass  = document.getElementById('pinInput').value;
+  const errEl = document.getElementById('pinError');
+  const btn   = document.getElementById('loginBtn');
+  if(!email || !pass){ errEl.textContent='Email and password required.'; return; }
+  if(!window._fbSignIn){ errEl.textContent='Auth not ready — refresh the page.'; return; }
+  btn.disabled = true;
+  errEl.textContent = '';
+  const original = btn.textContent;
+  btn.textContent = 'Signing in…';
+  window._fbSignIn(email, pass).then(()=>{
+    btn.disabled=false; btn.textContent=original;
     closePinPad();
     enterAdmin();
-  } else {
-    document.getElementById('pinError').textContent = 'Incorrect.';
-    document.getElementById('pinInput').value = '';
-  }
+  }).catch(err=>{
+    btn.disabled=false; btn.textContent=original;
+    document.getElementById('pinInput').value='';
+    // Firebase error codes: friendly messages
+    const code = (err && err.code)||'';
+    const msg = {
+      'auth/invalid-email':'Invalid email.',
+      'auth/wrong-password':'Incorrect email or password.',
+      'auth/invalid-credential':'Incorrect email or password.',
+      'auth/user-not-found':'Incorrect email or password.',
+      'auth/too-many-requests':'Too many attempts — try again later.',
+      'auth/network-request-failed':'Network error — check connection.'
+    }[code] || 'Sign-in failed. Try again.';
+    errEl.textContent = msg;
+  });
+}
+function sendReset(){
+  const email = (document.getElementById('loginEmail').value||'').trim();
+  const errEl = document.getElementById('pinError');
+  if(!email){ errEl.textContent='Type your email above first.'; return; }
+  if(!window._fbReset){ errEl.textContent='Auth not ready — refresh the page.'; return; }
+  window._fbReset(email).then(()=>{
+    errEl.style.color='var(--accent)';
+    errEl.textContent='Reset email sent — check your inbox.';
+  }).catch(err=>{
+    errEl.style.color='';
+    errEl.textContent='Could not send reset email.';
+  });
 }
 function togglePinView(){
   const inp = document.getElementById('pinInput');
@@ -676,6 +723,39 @@ document.addEventListener('keydown',e=>{
     submitPin();
   }
 });
+</script>
+<script type="module">
+  // Firebase Auth integration
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import {
+    getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBQYSheM8GGFHQIBW56lVMZdM327MNF-O0",
+    authDomain: "mahir-shop-admin.firebaseapp.com",
+    projectId: "mahir-shop-admin",
+    storageBucket: "mahir-shop-admin.firebasestorage.app",
+    messagingSenderId: "1098392748284",
+    appId: "1:1098392748284:web:b561afc7a9fbbc13f39779",
+    measurementId: "G-L6SJGSJWP9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Expose minimal API to the main script (window-scoped)
+  window._fbSignIn = (email, pass) => signInWithEmailAndPassword(auth, email, pass);
+  window._fbSignOut = () => signOut(auth);
+  window._fbReset = (email) => sendPasswordResetEmail(auth, email);
+
+  // Auto-restore admin mode if already signed in (e.g. after page reload)
+  onAuthStateChanged(auth, (user) => {
+    if (user && typeof enterAdmin === 'function' && !document.body.classList.contains('admin-mode')) {
+      // Only auto-enter if the user is signed in — they manually closed via signing out
+      enterAdmin();
+    }
+  });
 </script>
 </body>
 </html>
